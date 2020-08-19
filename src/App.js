@@ -1,25 +1,22 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Header } from './components/Header';
+import { Formulario } from './components/Formulario';
+import CategoriaProvider from './context/CategoriaContext';
 
 function App() {
+
+
+  // Envoovemos todos nuestros componentes en el componente de orden superior
+  // o Context para que esta pueda enviar los datos y funciones a todos los demas
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <CategoriaProvider>
+      <Header />
+      <div className="container mt-5">
+        <div className="row">
+          <Formulario />
+        </div>
+      </div>
+    </CategoriaProvider>
   );
 }
 
