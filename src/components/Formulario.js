@@ -1,5 +1,6 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CategoriaContext } from '../context/CategoriaContext'
+import { RecetasContext } from '../context/RecetasContext'
 
 export const Formulario = () => {
 
@@ -10,15 +11,34 @@ export const Formulario = () => {
   // const {hola} = useContext(CategoriaContext)
   // alert(hola)
   const {categorias} = useContext(CategoriaContext)
+  
+  // importando el segundo context
+  const {setBusquedaRecetas} = useContext(RecetasContext)
 
-  const handleSubmit = () => {
-    console.log('hola')
+  // State para manejar el formulario
+  // el estado va a inicializar como un objeto con string vacio
+  const [busqueda, setBusqueda] = useState({
+    nombre:'',
+    categoria:''
+  })
+
+  // Funcion para obtener los contenidos
+  const obtenerDatosReceta = (e) =>{
+    setBusqueda({
+      ...busqueda,
+      [e.target.name]:e.target.value
+    })
+  }
+
+  const handleSubmit = (e) =>{
+    e.preventDefault()
+    setBusquedaRecetas(busqueda)
   }
 
   return (
     <form
-      onSubmit={handleSubmit}
       className="col-12"
+      onSubmit={handleSubmit}
     >
       <fieldset className="text-center">
         <legend>Busca bebidas por categoría o ingrediente</legend>
@@ -32,6 +52,7 @@ export const Formulario = () => {
             className="form-control"
             name="nombre"
             placeholder="Buscar por ingrediente"
+            onChange={obtenerDatosReceta}
           />
         </div>
         
@@ -39,6 +60,7 @@ export const Formulario = () => {
           <select
             className="form-control"
             name="categoria"
+            onChange={obtenerDatosReceta}
           >
             <option value="">--Selecciona categoría--</option>
             {/* iterar sobre categorias para mostar las opciones. Para iterar siempre
