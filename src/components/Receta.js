@@ -23,7 +23,7 @@ const useStyles = makeStyles(theme => ({
   // estilos del modal
   paper: {
     position: 'absolute',
-    width: 300,
+    width: 350,
     backgroundColor: theme.palette.background.paper,
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
@@ -62,6 +62,27 @@ export const Receta = ({receta}) => {
   const handleClose=()=>{
     setOpen(false)
   }
+
+  // Funcion para poder listar los ingredientes de la API
+  // En esta ocacasion lo hacer asi por que necesitamos hacer un for y el JSX no
+  // no se pude. Y se hace con un for por la naturaleza de esta API por como esta
+  // regresando sus resultados uno a uno y no todos en un arreglo
+  // Esta funcion va a mostrar y formatear los ingredientes
+  const mostrarIngredientes = () =>{
+    
+    let ingredientes = []
+
+    for (let i = 0; i < 16; i++) {
+      if (guardarReceta[`strIngredient${i}`]) {
+        ingredientes.push(
+        <li>{guardarReceta[`strIngredient${i}`]} {guardarReceta[`strMeasure${i}`]}</li>
+        )
+      }
+    }
+
+    return ingredientes
+  }
+
 
   // extrayendo los valores del context
   const {setGuardarIdReceta, guardarReceta, setGuardarReceta} = useContext(ModalContext)
@@ -102,6 +123,12 @@ export const Receta = ({receta}) => {
             <h3 className="mt-4">Instrucciones</h3>
             <p>{guardarReceta.strInstructions}</p>
             <img className="img-fluid my-4" src={guardarReceta.strDrinkThumb} alt={guardarReceta.strDrink} />
+          
+            <h3>Ingredientes y cantidades</h3>
+            <ul>
+              {/* llamando una funcion para poder listar los ingredientes */}
+              {mostrarIngredientes(guardarReceta)}
+            </ul>
           </div>
         </Modal>
       </div>
