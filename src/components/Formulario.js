@@ -13,7 +13,7 @@ export const Formulario = () => {
   const {categorias} = useContext(CategoriaContext)
   
   // importando el segundo context
-  const {setBusquedaRecetas} = useContext(RecetasContext)
+  const {setBusquedaRecetas, setConsultar} = useContext(RecetasContext)
 
   // State para manejar el formulario
   // el estado va a inicializar como un objeto con string vacio
@@ -33,7 +33,16 @@ export const Formulario = () => {
   const handleSubmit = (e) =>{
     e.preventDefault()
     setBusquedaRecetas(busqueda)
+    setConsultar(true)
   }
+
+  /*
+    dentro del onSubmit podemos pasar la funcion directamente asi
+    onSubmit={  (e) =>{
+    e.preventDefault()
+    setBusquedaRecetas(busqueda)
+    }}
+  */
 
   return (
     <form
@@ -46,7 +55,7 @@ export const Formulario = () => {
 
       <div className="row mt-4">
 
-        <div className="col-md-4">
+        <div className="col-md-4 mt-2">
           <input 
             type="text"
             className="form-control"
